@@ -18,7 +18,7 @@ export default class Homepage extends React.Component {
 
 	render() {
 		return (
-			<div>{this.state.userID}</div>
+			<div>YAY{this.state.userID}</div>
 		);
 	}
 }
