@@ -9,10 +9,12 @@ const App = () => {
 	return (
 
 		<BrowserRouter>
-			<Header />
-			<Switch>
-				<Route path='/:id' component={Homepage} />
-			</Switch>
+			<div>
+				<Header />
+				<Switch>
+					<Route path='/:id' component={Homepage} />
+				</Switch>
+			</div>
 		</BrowserRouter>
 
 		)
