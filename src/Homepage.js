@@ -8,6 +8,7 @@ export default class Homepage extends React.Component {
 		}
 	}
 	componentDidMount() {
+		console.log(this.props.match.params.id, this.props)
 		if(this.props.match.params.id){
 			this.setState({
 				userID : this.props.match.params.id, 
