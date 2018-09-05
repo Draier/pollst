@@ -6,6 +6,7 @@ import queryString from 'query-string'
 import './bulma.css';
 import Header from './Header.js';
 import Homepage from './Homepage.js';
+import SubmitPoll from './components/SubmitPoll.js'
 
 class App extends React.Component {
 	componentWillMount() {
@@ -21,6 +22,7 @@ class App extends React.Component {
 					<div>
 						<Header />
 						<Switch>
+							<Route path="/submit" component={SubmitPoll} />
 							<Route path="/" component={Homepage} />
 						</Switch>
 					</div>

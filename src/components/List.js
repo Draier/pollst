@@ -1,4 +1,5 @@
 import React from 'react';
+import './List.css';
 
 export default class List extends React.Component {
 	constructor(props) {
@@ -7,24 +8,30 @@ export default class List extends React.Component {
 		this.state = {
 			polls : [{
 									question: "Wich is better?",
+									totalVotes: 244,
 									option1: {votes: 10, value: "Tits"},
 									option2: {votes: 234, value: "Ass"},
-									voters : [],
 								},{
 									question: "Asses right?",
+									totalVotes: 39,
 									option1: {votes: 34, value: "Tits"},
 									option2: {votes: 5, value: "Ass"},
-									voters : [],
 								},{
 									question: "Dissapointment bruh",
+									totalVotes: 23,
 									option1: {votes: 22, value: "Tits"},
 									option2: {votes: 1, value: "Ass"},
-									voters : [],
 								},{
 									question: "?",
+									totalVotes: 566,
 									option1: {votes: 221, value: "Tits"},
 									option2: {votes: 345, value: "Ass"},
-									voters : [],
+								},
+								{
+									question: "?",
+									totalVotes: 500,
+									option1: {votes: 250, value: "Tits"},
+									option2: {votes: 250, value: "Ass"},
 								}]
 		}
 	}
@@ -35,27 +42,31 @@ export default class List extends React.Component {
 
 	iterateThruPolls(poll) {
 		return (
-			<div className="card">
+			<div className="column is-6">
+				<div className="card">
+					<header className="card-header">
+						{poll.question}
+					</header>
 
-				<header className="card-header">
-					{poll.question}
-				</header>
+					<div className="card-content">
 
-				<div className="card-content">
-
-					<div className="content">
-						{poll.option1.value + ' (' + poll.option1.votes + ') or ...'}
-						{poll.option2.value + ' (' + poll.option2.votes + ') ?'}
+						<div className="content">
+						
+							{poll.option1.value + ' (' + poll.option1.votes + ') or ... '}
+							<progress className="progress is-link is-large" value={poll.option1.votes} max={poll.totalVotes}></progress>
+							
+							<progress className="progress is-link is-large" value={poll.option2.votes} max={poll.totalVotes}></progress>
+							{poll.option2.value + ' (' + poll.option2.votes + ') ?'}
+						</div>
 					</div>
-
 				</div>
-
 			</div>
 		)
 	}
+
 	render() {
 		return (
-			<div>
+			<div className="columns list is-centered is-3 is-multiline">
 				{this.state.polls.map( poll => this.iterateThruPolls(poll))}
 			</div>
 		);
