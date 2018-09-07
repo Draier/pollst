@@ -11,18 +11,20 @@ export default class Button extends React.Component {
 	}
 
 	componentDidMount() {
-		fetch("http://localhost:7777/?id=" + cookie.load('userId')).then((response) => {
-			  return response.json().then(json => {
-			        return response.ok ? json : Promise.reject(json);
-				});
-		}).then((res)=>{
-			if(res)
-				this.setState({
-					isLoggedIn: true, 
-				});
-			else
-				return
-		})
+		if(cookie.load('userId')){
+			fetch("http://localhost:7777/?id=" + cookie.load('userId')).then((response) => {
+				  return response.json().then(json => {
+				        return response.ok ? json : Promise.reject(json);
+					});
+			}).then((res)=>{
+				if(res)
+					this.setState({
+						isLoggedIn: true, 
+					});
+				else
+					return
+			})
+		}
 	}
 
 	render() {

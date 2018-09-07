@@ -1,5 +1,6 @@
 import React from 'react';
 import List from './components/List.js'
+import {Link} from 'react-router-dom'
 import './home.css';
 
 export default class Homepage extends React.Component {
@@ -14,7 +15,7 @@ export default class Homepage extends React.Component {
 		return (
 			<div>
 				<h2>Welcome to Pollst these are the most recent polls submitted</h2>
-				<a href="" className="button">Submit a poll</a>
+				<Link to="/submit" className="button">Submit a poll</Link>
 				<List />
 			</div>
 		)
