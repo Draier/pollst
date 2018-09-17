@@ -9,13 +9,43 @@ import Homepage from './Homepage.js';
 import SubmitPoll from './components/SubmitPoll.js'
 
 class App extends React.Component {
-	componentWillMount() {
-		const values = queryString.parse(window.location.search);
-		if(values.id){
-			cookie.save('userId', values.id, { path: '/' })
+	constructor(){
+		super()
+		this.state = {
+			cookie : false,
 		}
 	}
-	
+	checkUser = (id) => {
+		console.log(cookie.load('userId'))
+		if(!cookie.load('userId')){
+			fetch("http://localhost:7777/validate?userid=" + id)
+			.then((response) => {
+					  return response.json().then(json => {
+					        return response.ok ? json : Promise.reject(json);
+						});
+			})
+			.then((res)=>{
+					if(res === false){
+						return
+					}
+					else{
+						cookie.save('userId', id, { path: '/' })
+						this.setState({
+							cookie: true
+						});
+					}
+			})
+		}
+	}
+
+	componentDidMount() {
+		const values = queryString.parse(window.location.search);
+		if(values.id && !cookie.load('userId')){
+			console.log('checking!', values.id)
+			this.checkUser(values.id);
+		}
+	}
+
 	render () {
 		return (
 				<BrowserRouter>

@@ -1,4 +1,7 @@
 import React from 'react';
+import Button from './Button.js'
+import cookie from 'react-cookies';
+import PollCard from './PollCard.js'
 import './List.css';
 
 export default class List extends React.Component {
@@ -6,61 +9,52 @@ export default class List extends React.Component {
 		super(props);
 
 		this.state = {
-			polls : [{
-									question: "Wich is better?",
-									totalVotes: 244,
-									option1: {votes: 10, value: "Tits"},
-									option2: {votes: 234, value: "Ass"},
-								},{
-									question: "Asses right?",
-									totalVotes: 39,
-									option1: {votes: 34, value: "Tits"},
-									option2: {votes: 5, value: "Ass"},
-								},{
-									question: "Dissapointment bruh",
-									totalVotes: 23,
-									option1: {votes: 22, value: "Tits"},
-									option2: {votes: 1, value: "Ass"},
-								},{
-									question: "?",
-									totalVotes: 566,
-									option1: {votes: 221, value: "Tits"},
-									option2: {votes: 345, value: "Ass"},
-								},
-								{
-									question: "?",
-									totalVotes: 500,
-									option1: {votes: 250, value: "Tits"},
-									option2: {votes: 250, value: "Ass"},
-								}]
+			polls : [],
+			isLoggedIn : null,
 		}
+	}
+
+	checkUser = (id) => {
+		fetch("http://localhost:7777/validate?userid=" + id)
+		.then((response) => {
+				  return response.json().then(json => {
+				        return response.ok ? json : Promise.reject(json);
+					});
+		})
+		.then((res)=>{
+			console.log(res)
+				if(!res){
+					this.setState({
+						isLoggedIn: false,
+					})
+				}
+				else{
+					this.setState({
+						isLoggedIn: true,
+					})
+				}
+		})
 	}
 
 	componentDidMount() {
 		//Fetch polls and put in the state
+		fetch('http://localhost:7777/polls/get').then(response => {
+			return response.json().then(json => {
+				        return response.ok ? json : Promise.reject(json);
+					});
+		}).then(response=>{
+			if(response)
+				this.setState({
+					polls:response 
+				})
+		})
+		if(cookie.load('userId'))
+			this.checkUser(cookie.load('userId'));
 	}
 
-	iterateThruPolls(poll) {
+	iterateThruPolls(poll) {		
 		return (
-			<div className="column is-6">
-				<div className="card">
-					<header className="card-header">
-						{poll.question}
-					</header>
-
-					<div className="card-content">
-
-						<div className="content">
-						
-							{poll.option1.value + ' (' + poll.option1.votes + ') or ... '}
-							<progress className="progress is-link is-large" value={poll.option1.votes} max={poll.totalVotes}></progress>
-							
-							<progress className="progress is-link is-large" value={poll.option2.votes} max={poll.totalVotes}></progress>
-							{poll.option2.value + ' (' + poll.option2.votes + ') ?'}
-						</div>
-					</div>
-				</div>
-			</div>
+			<PollCard key={poll.question} poll={poll} isLoggedIn={this.state.isLoggedIn}/>
 		)
 	}
 

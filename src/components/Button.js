@@ -1,41 +1,19 @@
 import React from 'react';
-import cookie from 'react-cookies';
-
 
 export default class Button extends React.Component {
-	constructor(props){
-		super(props)
-		this.state = {
-			isLoggedIn: false,
-		}
-	}
-
-	componentDidMount() {
-		if(cookie.load('userId')){
-			fetch("http://localhost:7777/?id=" + cookie.load('userId')).then((response) => {
-				  return response.json().then(json => {
-				        return response.ok ? json : Promise.reject(json);
-					});
-			}).then((res)=>{
-				if(res)
-					this.setState({
-						isLoggedIn: true, 
-					});
-				else
-					return
-			})
-		}
+	vote = (option) => {
+		fetch(`http://localhost:7777/polls/vote?option=${option}`,{
+			method: "PUT",
+			headers: {'Content-Type': 'application/json'},
+			body: JSON.stringify(this.props.data),
+		})
 	}
 
 	render() {
-		if(this.state.isLoggedIn) {
-			return (
-				<a href="http://murmuring-dusk-45038.herokuapp.com/auth/google" className="button is-loading">{this.props.children}</a>
-			);
-		}
-		else
-			return (
-				<a href="http://murmuring-dusk-45038.herokuapp.com/auth/google" className="button">{this.props.children}</a>
-				)
+		return (
+			<a className="button" onClick={ () => this.vote(this.props.option)}>
+				{this.props.children}
+			</a>
+		);
 	}
 }

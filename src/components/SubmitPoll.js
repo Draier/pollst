@@ -1,17 +1,14 @@
 import React from 'react';
 import Container from './Container.js';
 import cookie from 'react-cookies'
+import {Redirect} from 'react-router';
 
 export default class SubmitPoll extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-
 	render() {
+	if(cookie.load('userId')){
 		return (
 			<Container>
-				<form action="http://localhost:7777/form" method="POST">
+				<form action="http://localhost:7777/polls/submit" method="POST">
 					<div className="field">
 						<label className="label">Question</label>
 						<div className="control">
@@ -45,5 +42,10 @@ export default class SubmitPoll extends React.Component {
 				</form>
 			</Container>
 		);
+	}
+	else{
+		alert("You don't have the permissions to do this, please log in before trying to submit");
+		return (<Redirect to="/" />)
+	}
 	}
 }
