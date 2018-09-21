@@ -1,6 +1,5 @@
 import React from 'react';
 import cookie from 'react-cookies';
-import {Redirect} from 'react-router';
 
 export default class LogoutButton extends React.Component {
 	constructor(){
@@ -11,20 +10,24 @@ export default class LogoutButton extends React.Component {
 	}
 	
 	logOut = () => {
-		cookie.remove('userId')
-		this.setState({
-			loggingOut : true, 
-		});
+		if(window.confirm("Are you sure?")){
+			cookie.remove('userId')
+			cookie.remove('userName')
+			this.setState({
+				loggingOut : true, 
+			});
+		}
 	}
 
 	render() {
-		if(cookie.load('userId')){
-			return (
-				<a className="button" onClick={this.logOut}>Log Out</a>
-			);
+		if(this.state.loggingOut){
+			window.location = "/";
+			return null;
 		}
-		else if(this.state.loggingOut){
-			return <Redirect to="/" />
+		else if(cookie.load('userId')){
+			return (
+				<a className="log" onClick={() => this.logOut()}>Log Out</a>
+			);
 		}
 		else{
 			return  null

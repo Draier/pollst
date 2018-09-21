@@ -8,7 +8,7 @@ export default class SubmitPoll extends React.Component {
 	if(cookie.load('userId')){
 		return (
 			<Container>
-				<form action="http://localhost:7777/polls/submit" method="POST">
+				<form action="https://murmuring-dusk-45038.herokuapp.com/polls/submit" method="POST">
 					<div className="field">
 						<label className="label">Question</label>
 						<div className="control">

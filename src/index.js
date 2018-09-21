@@ -16,9 +16,8 @@ class App extends React.Component {
 		}
 	}
 	checkUser = (id) => {
-		console.log(cookie.load('userId'))
 		if(!cookie.load('userId')){
-			fetch("http://localhost:7777/validate?userid=" + id)
+			fetch("https://murmuring-dusk-45038.herokuapp.com/validate?userid=" + id)
 			.then((response) => {
 					  return response.json().then(json => {
 					        return response.ok ? json : Promise.reject(json);
@@ -30,24 +29,26 @@ class App extends React.Component {
 					}
 					else{
 						cookie.save('userId', id, { path: '/' })
-						this.setState({
-							cookie: true
-						});
+						cookie.save('userName', res.userName)
+						window.location = "/";
 					}
 			})
 		}
+		else
+			this.setState({
+				cookie:true, 
+			});
 	}
 
 	componentDidMount() {
 		const values = queryString.parse(window.location.search);
 		if(values.id && !cookie.load('userId')){
-			console.log('checking!', values.id)
 			this.checkUser(values.id);
 		}
 	}
 
 	render () {
-		return (
+			return (
 				<BrowserRouter>
 					<div>
 						<Header />
@@ -57,7 +58,7 @@ class App extends React.Component {
 						</Switch>
 					</div>
 				</BrowserRouter>
-		)
+			)
 	}
 }
 

@@ -2,6 +2,14 @@
 @import 'bulma/sass/utilities/functions';
 
 $gap: 300px;
-$navbar-background-color: #212121FF;
+$body-background-color: #C7DCDC;
+$card-background-color: #A7C7C8;
+$progress-value-background-color :#37555A;
+$button-background-color : #D1D1D1FF;
+$blue: #465B70;
 
 @import 'bulma/bulma.sass';
+
+.has-text-right{
+	margin-right: 10px;
+}
