@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
 import cookie from 'react-cookies';
-import queryString from 'query-string'
+import queryString from './query-string.js'
 import './bulma.css';
 import Header from './Header.js';
 import Homepage from './Homepage.js';

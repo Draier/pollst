@@ -37,7 +37,7 @@ export default class Header extends React.Component {
 		return (
 			<nav className="navbar is-dark" aria-label="main navigation">
 				<div className="navbar-brand">
-					<Link to="/" className="navbar-item"><img class="logo" src={Logo} alt="Pollst Logo"/></Link>
+					<Link to="/" className="navbar-item"><img className="logo" src={Logo} alt="Pollst Logo"/></Link>
 					<a role="button" className={this.state.isActive ? "navbar-burger is-active" : "navbar-burger"} 
 						aria-label="menu" aria-expanded="false" onClick={()=>this.dropMenuMobile()}>
 
