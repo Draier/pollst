@@ -28,7 +28,7 @@ class App extends React.Component {
 						return
 					}
 					else{
-						cookie.save('userId', id, { path: '/' })
+						cookie.save('userId', res._id, { path: '/' })
 						cookie.save('userName', res.userName)
 						window.location = "/";
 					}
