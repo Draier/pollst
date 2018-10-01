@@ -20,6 +20,7 @@ export default class List extends React.Component {
 					});
 		}).then(response=>{
 			if(response)
+				response.reverse();
 				this.setState({
 					polls:response 
 				})
